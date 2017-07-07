@@ -34,7 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.all('/oauth/token', app.oauth.grant());
 
 // this URL is auto authorize with demo token
-app.get('/oauth/authorizex', function (req, res, next) {
+app.get('/api/oauth/authorizex', function (req, res, next) {
   // If they aren't logged in, send them to your own login implementation
   let uri = req.query.redirect_uri;
   uri += "#state=" + req.query.state;
@@ -44,12 +44,15 @@ app.get('/oauth/authorizex', function (req, res, next) {
   res.redirect(uri);
 });
 
-app.get('/oauth/authorize', function (req, res, next) {
+app.get('/api/oauth/authorize', function (req, res, next) {
+  if (!req.query.redirect_uri) {
+    res.status(400).send({"ErrorCode" : "invalid_request", "Error" :"Redirection URI is required"});
+  }
   if (validRedirectURLs.indexOf(req.query.redirect_uri) === -1) {
-    res.sendStatus(403);
+    res.status(400).send({"ErrorCode" : "invalid_request", "Error" :`invalid redirection URI: ${req.query.redirect_uri}`});
     return;
   }
-  let login = '/login';
+  let login = 'api/login';
   let d = "?";
   let parmkeys = Object.keys(req.query);
   parmkeys.forEach((key) => {
@@ -60,12 +63,12 @@ app.get('/oauth/authorize', function (req, res, next) {
   res.redirect(login);
 });
 
-app.get('/login', function(req, res, next) {
+app.get('/api/login', function(req, res, next) {
   console.log(`get: ${req.path}`);
   res.render('login');
 });
 
-app.post('/login', function(req, res, next) {
+app.post('api/login', function(req, res, next) {
   console.log(`post: ${req.path}`);
   res.sendStatus(500);
 });
