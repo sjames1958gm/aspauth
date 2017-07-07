@@ -81,7 +81,7 @@ app.post('api/login', function(req, res, next) {
 });
 
 app.use(function(req, res) {
-  res.send('Secret area');
+  res.sendStatus(404);
 });
 
 app.listen(port, function() {
