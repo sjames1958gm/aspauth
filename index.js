@@ -66,7 +66,8 @@ app.get('/api/oauth/authorize', function (req, res, next) {
       d = "&";
     });
     console.log(login);
-    res.redirect(login);
+    res.render('login', {action: login});
+    // res.redirect(login);
   }
 });
 
@@ -75,7 +76,7 @@ app.get('/api/login', function(req, res, next) {
   res.render('login');
 });
 
-app.post('api/login', function(req, res, next) {
+app.post('/api/login', function(req, res, next) {
   console.log(`post: ${req.path}`);
   res.sendStatus(500);
 });

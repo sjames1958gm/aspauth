@@ -7,7 +7,7 @@ html
     div.container
       div.row
         div.col-xs-6
-          form.form-signin(method='POST' action='/api/login')
+          form.form-signin(method='POST' action={action})
             h2.form-signin-heading Login
             label.sr-only(for='inputUser') User ID
             input#inputUser.form-control(type='text', placeholder='User ID', required='', autofocus='')
