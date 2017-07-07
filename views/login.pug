@@ -10,9 +10,9 @@ html
           form.form-signin(method='POST' action=action)
             h2.form-signin-heading Login
             label.sr-only(for='inputUser') User ID
-            input#inputUser.form-control(type='text', placeholder='User ID', required='', autofocus='')
+            input#inputUser.form-control(type='text', name="username" placeholder='User ID', required='', autofocus='')
             label.sr-only(for='inputPassword') Password
-            input#inputPassword.form-control(type='password', placeholder='Password', required='')
+            input#inputPassword.form-control(type='password', name="password" placeholder='Password', required='')
             button.btn.btn-lg.btn-primary.btn-block(type='submit') Log in
             br
             a.register-link(href='/api/register') Create Account
