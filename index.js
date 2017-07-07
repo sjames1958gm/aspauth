@@ -7,7 +7,8 @@ require('dotenv').config();
 
 let validRedirectURLs = [
   "https://layla.amazon.com/spa/skill/account-linking-status.html?vendorId=M1MXCAGUJCRGZ6",
-  "https://pitangui.amazon.com/spa/skill/account-linking-status.html?vendorId=M1MXCAGUJCRGZ6"
+  "https://pitangui.amazon.com/spa/skill/account-linking-status.html?vendorId=M1MXCAGUJCRGZ6",
+  "https://developers.google.com/oauthplayground"
   ];
 
 let port = process.env.PORT || 8080;
@@ -48,19 +49,21 @@ app.get('/api/oauth/authorize', function (req, res, next) {
   if (!req.query.redirect_uri) {
     res.status(400).send({"ErrorCode" : "invalid_request", "Error" :"Redirection URI is required"});
   }
-  if (validRedirectURLs.indexOf(req.query.redirect_uri) === -1) {
+  else if (validRedirectURLs.indexOf(req.query.redirect_uri) === -1) {
     res.status(400).send({"ErrorCode" : "invalid_request", "Error" :`invalid redirection URI: ${req.query.redirect_uri}`});
     return;
   }
-  let login = 'api/login';
-  let d = "?";
-  let parmkeys = Object.keys(req.query);
-  parmkeys.forEach((key) => {
-    login += d + key + "=" + req.query[key];
-    d = "&";
-  });
-  console.log(login);
-  res.redirect(login);
+  else {
+    let login = 'api/login';
+    let d = "?";
+    let parmkeys = Object.keys(req.query);
+    parmkeys.forEach((key) => {
+      login += d + key + "=" + req.query[key];
+      d = "&";
+    });
+    console.log(login);
+    res.redirect(login);
+  }
 });
 
 app.get('/api/login', function(req, res, next) {
