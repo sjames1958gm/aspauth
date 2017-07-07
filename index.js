@@ -97,8 +97,10 @@ app.post('/api/login', function(req, res, next) {
     return;
   }
   else {
-    let uri = req.query.redirect_uri;
-    uri += "#state=" + req.query.state;
+    let uri = req.query.redirect_uri + "#";
+    if (req.query.state) {
+      uri += "state=" + req.query.state;
+    }
     if (validUsers[req.body.username]) {
       uri += "&access_token=" + encodeURIComponent(validUsers[req.body.username]);
       uri += "&token_type=Bearer";
