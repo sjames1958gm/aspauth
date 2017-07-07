@@ -91,7 +91,7 @@ app.post('/api/login', function(req, res, next) {
     return;
   }
   else {
-    console.log(body);
+    console.log(req);
     let uri = req.query.redirect_uri;
     uri += "#state=" + req.query.state;
     uri += "&access_token=" + "demo";
