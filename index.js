@@ -11,6 +11,12 @@ let validRedirectURLs = [
   "https://developers.google.com/oauthplayground"
   ];
 
+let validUsers = {
+  steve: "Cookie.Auth=steve-NeverExpires",
+  demo: "Cookie.Auth=demo-NeverExpires",
+  stephen: "Cookie.Auth=stephen-NeverExpires",
+}
+
 let port = process.env.PORT || 8080;
 
 var app = express();
@@ -91,11 +97,15 @@ app.post('/api/login', function(req, res, next) {
     return;
   }
   else {
-    console.log(req.body);
     let uri = req.query.redirect_uri;
     uri += "#state=" + req.query.state;
-    uri += "&access_token=" + "demo";
-    uri += "&token_type=Bearer";
+    if (validUsers[req.body.username]) {
+      uri += "&access_token=" + encodeURIComponent(validUsers[req.body.username]);
+      uri += "&token_type=Bearer";
+    }
+    else {
+      uri += "&error=" + encodeURIComponent("access_denied");
+    }
     console.log(uri);
     res.redirect(uri);
   }
