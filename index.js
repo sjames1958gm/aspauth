@@ -12,9 +12,9 @@ let validRedirectURLs = [
   ];
 
 let validUsers = {
-  steve: "nzos-steve",
-  demo: "nzos-demo",
-  stephen: "nzos-stephen",
+  steve: { token: "nzos-steve", password: "steve"},
+  demo: { token: "nzos-demo", password: "demo"},
+  stephen: { token: "nzos-stephen", password: "stephen"},
 }
 
 let port = process.env.PORT || 8080;
@@ -101,8 +101,9 @@ app.post('/api/login', function(req, res, next) {
     if (req.query.state) {
       uri += "state=" + req.query.state + "&";
     }
-    if (validUsers[req.body.username]) {
-      uri += "access_token=" + encodeURIComponent(validUsers[req.body.username]);
+    if (validUsers[req.body.username] && 
+      validUsers[req.body.username].password == req.body.password) {
+      uri += "access_token=" + encodeURIComponent(validUsers[req.body.username].token);
       uri += "&token_type=Bearer";
     }
     else {
