@@ -29,7 +29,8 @@ app.set('view engine', 'pug');
 app.use(morgan('tiny'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/api/static', express.static(path.join(__dirname, 'public')));
+
 
 // Handle token grant requests
 //app.all('/oauth/token', app.oauth.grant());
