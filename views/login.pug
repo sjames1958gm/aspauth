@@ -1,0 +1,19 @@
+html
+  head
+    link(rel='stylesheet', href='css/style.css')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u', crossorigin='anonymous')
+
+  body
+    div.container
+      div.row
+        div.col-xs-6
+          form.form-signin(method='POST' action='/login')
+            h2.form-signin-heading Login
+            label.sr-only(for='inputUser') User ID
+            input#inputUser.form-control(type='text', placeholder='User ID', required='', autofocus='')
+            label.sr-only(for='inputPassword') Password
+            input#inputPassword.form-control(type='password', placeholder='Password', required='')
+            button.btn.btn-lg.btn-primary.btn-block(type='submit') Log in
+            br
+            a.register-link(href='/register') Create Account
+

@@ -58,7 +58,7 @@ app.get('/api/oauth/authorize', function (req, res, next) {
     return;
   }
   else {
-    let login = 'api/login';
+    let login = '/api/login';
     let d = "?";
     let parmkeys = Object.keys(req.query);
     parmkeys.forEach((key) => {
