@@ -53,6 +53,10 @@ app.get('/api/oauth/authorize', function (req, res, next) {
     res.status(400).send({"ErrorCode" : "invalid_request", "Error" :`invalid redirection URI: ${req.query.redirect_uri}`});
     return;
   }
+  else if (!req.query.client_id) {
+    res.status(400).send({"ErrorCode" : "invalid_request", "Error" :`Client ID is required`});
+    return;
+  }
   else {
     let login = 'api/login';
     let d = "?";
