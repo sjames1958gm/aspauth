@@ -12,9 +12,9 @@ let validRedirectURLs = [
   ];
 
 let validUsers = {
-  steve: "Cookie.Auth=steve-NeverExpires",
-  demo: "Cookie.Auth=demo-NeverExpires",
-  stephen: "Cookie.Auth=stephen-NeverExpires",
+  steve: "nzos-steve",
+  demo: "nzos-demo",
+  stephen: "nzos-stephen",
 }
 
 let port = process.env.PORT || 8080;
@@ -99,14 +99,14 @@ app.post('/api/login', function(req, res, next) {
   else {
     let uri = req.query.redirect_uri + "#";
     if (req.query.state) {
-      uri += "state=" + req.query.state;
+      uri += "state=" + req.query.state + "&";
     }
     if (validUsers[req.body.username]) {
-      uri += "&access_token=" + encodeURIComponent(validUsers[req.body.username]);
+      uri += "access_token=" + encodeURIComponent(validUsers[req.body.username]);
       uri += "&token_type=Bearer";
     }
     else {
-      uri += "&error=" + encodeURIComponent("access_denied");
+      uri += "error=" + encodeURIComponent("access_denied");
     }
     console.log(uri);
     res.redirect(uri);
