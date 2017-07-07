@@ -78,7 +78,26 @@ app.get('/api/login', function(req, res, next) {
 
 app.post('/api/login', function(req, res, next) {
   console.log(`post: ${req.path}`);
-  res.sendStatus(500);
+  if (!req.query.redirect_uri) {
+    res.status(400).send({"ErrorCode" : "invalid_request", "Error" :"Redirection URI is required"});
+  }
+  else if (validRedirectURLs.indexOf(req.query.redirect_uri) === -1) {
+    res.status(400).send({"ErrorCode" : "invalid_request", "Error" :`invalid redirection URI: ${req.query.redirect_uri}`});
+    return;
+  }
+  else if (!req.query.client_id) {
+    res.status(400).send({"ErrorCode" : "invalid_request", "Error" :`Client ID is required`});
+    return;
+  }
+  else {
+    console.log(body);
+    let uri = req.query.redirect_uri;
+    uri += "#state=" + req.query.state;
+    uri += "&access_token=" + "demo";
+    uri += "&token_type=Bearer";
+    console.log(uri);
+    res.redirect(uri);
+  }
 });
 
 app.use(function(req, res) {
